@@ -9,7 +9,7 @@ export default function Home() {
         <SideBar/>
         </div>
         <main className="flex  w-full min-h-screen flex-col items-center justify-between p-24">
-          <h1>Hello to my Reminder Management</h1>
+          <h1>Hello to my Reminder Managementdsada</h1>
         </main>
       </div>
 
