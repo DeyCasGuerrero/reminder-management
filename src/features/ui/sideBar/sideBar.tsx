@@ -1,7 +1,25 @@
-export default function sideBard(){
+import Link from "next/link";
+
+export default function SideBard(){
     return (
-        <nav>
+        <div className="flex flex-col gap-2  h-full ">
+            <Link href={'/Home'} legacyBehavior>
+                <a> Homdasde </a>
+            </Link>
+
+            <Link href={'/Home'} legacyBehavior>
+                <a> Reminders </a>
+            </Link>
             
-        </nav>
+            <Link href={'/Home'} legacyBehavior>
+                <a> Webn </a>
+            </Link>
+            
+            <Link href={'/Home'} legacyBehavior>
+                <a> Cuenta </a>
+            </Link>
+            
+            
+        </div>
     )
 }

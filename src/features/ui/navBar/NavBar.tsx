@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function NavBar(){
     return(
-        <nav className="flex items-center justify-between w-full p-4 h-14 ">
+        <nav className="flex items-center justify-between w-full py-1 h-14 ">
             <div className="">
                 <h1 className="text-white text-3xl tracking-wide">
                     ReminderWaifu
