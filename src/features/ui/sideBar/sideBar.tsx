@@ -1,107 +1,73 @@
-import Link from "next/link";
 import { routes } from "@/lib/routes";
-import { AiFillHome, AiFillBook, AiFillSignal, AiFillAlert, AiFillSetting, AiOutlineUser } from "react-icons/ai";
-import { IconType } from "react-icons";
-export default function SideBard() {
+import Link from "next/link";
 
-    const icons: { [key: string]: IconType } = {
-        AiFillHome: AiFillHome,
-        AiFillSignal: AiFillSignal,
-        AiFillAlert: AiFillAlert,
-        AiFillBook: AiFillBook,
-        AiOutlineUser: AiOutlineUser,
-        AiFillSetting: AiFillSetting,
-    };
+function SideBar() {
 
-      
     return (
+        <div className="hidden sm:flex flex-col flex-none min-w-48 w-[15%]  text-white py-3 gap-2  h-full bg-black bg-opacity-20 backdrop-blur-lg">
+            <div className="flex items-center flex-col flex-grow h-full gap-2">
 
-        <>
-            <div className="hidden flex-col w-1/5 px-4 text-white py-3 gap-2  h-full bg-black bg-opacity-20 backdrop-blur-lg">
-                <div className="flex items-center flex-col flex-grow h-full gap-2">
-                    <div>
-                        <div className="p-4">
-                            <h2 className="text-xl font-bold text-white">CodingLab</h2>
-                        </div>
-                    </div>
-
-                    <nav className="flex-1 flex flex-col gap-2 p-4">
-                        {routes.mainMenu.map((route, index) => (
-                            <Link key={index} href={route.path}>
-                                <button className="w-full justify-start text-white hover:bg-white hover:bg-opacity-20">
-                                    <AiFillHome size={30} />
-                                </button>
-                            </Link>
-                        ))}
-
-                        {routes.general.map((route, index) => (
-                            <Link key={index} href={route.path}>
-                                <button className="w-full justify-start text-white hover:bg-white hover:bg-opacity-20">
-                                    <AiFillSignal size={30} />
-                                </button>
-                            </Link>
-                        ))}
-
-                        {routes.general.map((route, index) => (
-                            <Link key={index} href={route.path}>
-                                <button className="w-full justify-start text-white hover:bg-white hover:bg-opacity-20">
-                                    <AiFillAlert size={30} />
-                                </button>
-                            </Link>
-                        ))}
-                    </nav>
+                <div className="p-4  w-full text-left">
+                    <h2 className="text-2xl font-bold text-white">CodingLab</h2>
                 </div>
 
-                <div>
-                    <div className=" flex items-center  justify-center">
-                        <div className="w-12 h-12 rounded-full border border-white">
-                            <img src="/profile.jpg" alt="profile" className="w-full h-full rounded-full" />
-                        </div>
+                <nav className="flex-1 flex flex-col gap-2 p-4 w-full">
+                    <div className="w-full h-full flex flex-col gap-2 ">
+                        <h3 className="text-white font-semibold">{routes.mainMenu.sectionName}</h3>
+                        {routes.mainMenu.routes.map((route, index) => {
+                            const IconReact = route.icon;
+
+                            return (
+                                <Link key={index} href={route.path}>
+                                    <button className="w-full flex items-center justify-start gap-2  text-white rounded-lg px-1 py-2 hover:bg-white hover:bg-opacity-20">
+                                        {IconReact && <IconReact size={20} />}
+                                        {route.name}
+                                    </button>
+                                </Link>
+                            )
+                        })}
+
+                        <h3 className="text-white font-semibold">{routes.general.sectionName}</h3>
+
+                        {routes.general.routes.map((route, index) => {
+                            const IconReact = route.icon;
+
+                            return (
+                                <Link key={index} href={route.path}>
+                                    <button className="w-full flex items-center rounded-lg gap-2 justify-start px-1 py-2 text-white hover:bg-white hover:bg-opacity-20">
+                                        {IconReact && <IconReact size={20} />}
+                                        {route.name}
+                                    </button>
+                                </Link>
+                            )
+                        })}
                     </div>
-                </div>
-
-            </div>
 
 
-            <div className="flex justify-around sm:hidden items-center bg-white bg-opacity-20 backdrop-blur-lg p-2">
-                <nav className="w-full flex gap-2 p-4 justify-around">
-                    {routes.mainMenu.map((route, index) => {
-                        const IconComponent = icons[route.icon];
-                        return (
-                            <Link key={index} href={route.path}>
-                                <button className="flex items-center text-white hover:bg-white hover:bg-opacity-20">
-                                    {IconComponent && <IconComponent size={30} />}
-                                </button>
-                            </Link>
-                        );
-                    })}
 
-                    {routes.general.map((route, index) => {
-                        const IconComponent = icons[route.icon];
-                        return (
-                            <Link key={index} href={route.path}>
-                                <button className="flex items-center text-white hover:bg-white hover:bg-opacity-20">
-                                    {IconComponent && <IconComponent size={30} />}
-                                </button>
-                            </Link>
-                        );
-                    })}
 
-                    {routes.account.map((route, index) => {
-                        const IconComponent = icons[route.icon];
-                        return (
-                            <Link key={index} href={route.path}>
-                                <button className="flex items-center text-white hover:bg-white hover:bg-opacity-20">
-                                    {IconComponent && <IconComponent size={30} />}
-                                </button>
-                            </Link>
-                        );
-                    })}
+                    <div className="w-full">
+                        <h3 className="text-white font-semibold">{routes.account.sectionName}</h3>
+                        {routes.account.routes.map((route, index) => {
+                            const IconReact = route.icon;
+
+                            return (
+
+                                <Link key={index} href={route.path}>
+                                    <button className="w-full flex items-center gap-2 rounded-lg px-1 py-2 justify-start text-white hover:bg-white hover:bg-opacity-20">
+                                        {IconReact && <IconReact size={20} />}
+                                        {route.name}
+                                    </button>
+                                </Link>
+                            )
+                        })}
+                    </div>
                 </nav>
             </div>
-
-
-        </>
+        </div>
 
     )
+
 }
+
+export default SideBar;
