@@ -4,8 +4,6 @@ import { routes } from "@/lib/routes";
 export default function UnderBard() {
 
 
-
-
     return (
         <div className="flex justify-around sm:hidden items-center bg-white bg-opacity-20 backdrop-blur-lg p-2">
             <nav className="w-full flex gap-2 p-4 justify-around">

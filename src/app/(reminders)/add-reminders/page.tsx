@@ -1,4 +1,4 @@
-import { FormRichText } from "@/features";
+import { FormRichText } from "@/features/ui";
 
 function CreateReminders() {
     return(

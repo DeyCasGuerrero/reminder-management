@@ -10,27 +10,31 @@ import { db } from "@/services/firebase";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
-import { title } from "process";
+
 
 
 function RichTextReminders() {
 
     const [value, setValue] = useState({
-        title:'',
-        content:'',
-
+        title: '',
+        content: '',
     })
 
 
-    const handleOnChanged = (e: ChangeEvent<HTMLInputElement>) =>{
-        const {name, value } = e.target;
-        setValue(prevValue=>({
+    const handleOnChanged = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setValue(prevValue => ({
             ...prevValue,
-            [name]:value,
+            [name]: value,
         }))
     }
 
-    console.log(value)
+    const handleQuillChange = (content: string) => {
+        setValue(prevValue => ({
+            ...prevValue,
+            content: content,
+        }));
+    };
 
     //COMPROBAR SI HAY CONEXION O NO 
 
@@ -51,8 +55,6 @@ function RichTextReminders() {
 
     //     fetchData();
     // }, []);
-
-    console.log(value)
     const toolbarOptions = [
         [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
@@ -66,7 +68,7 @@ function RichTextReminders() {
 
     return (
         <>
-        {/* <div>
+            {/* <div>
             <h1>Test Firebase Connection</h1>
             <pre>{JSON.stringify(data, null, 2)}</pre>
         </div> */}
@@ -83,7 +85,8 @@ function RichTextReminders() {
                         <Input value={value.title} onChange={handleOnChanged} name="title" placeholder='Colocale el titulo' size='lg' color='GrayText' />
                         <ReactQuill className="text-black " theme="snow"
                             modules={{ toolbar: toolbarOptions }}
-                            // value={value.content} onChange={setValue}
+                            value={value.content}
+                            onChange={handleQuillChange}
                         />
 
                         <button className="w-full flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out ">
