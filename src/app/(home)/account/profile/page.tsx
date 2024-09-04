@@ -25,11 +25,7 @@ function Profile() {
                         <h1 className="truncate text-xl font-semibold text-gray-800 text-center">Deyvis Castillo</h1>
                         <div className="flex items-center gap-2 text-text-45 ">
                             <span className="min-w-28 truncate">
-                                Ingeniero de sistemas
-                            </span>
-                            /
-                            <span className="min-w-28 truncate">
-                                Siempre presente
+                                Ingeniero de sistemas y traficante de organos
                             </span>
                         </div>
 
@@ -52,7 +48,7 @@ function Profile() {
                             <AiOutlineBell size={50} className="text-pink-500"></AiOutlineBell>
                             <div className="text-right">
                                 <p className="text-2xl font-bold text-gray-800">42</p>
-                                <p className="text-sm text-gray-600">Active Reminders</p>
+                                <p className="text-sm text-gray-600">Recordatorios activos</p>
                             </div>
                         </div>
                     </div>
@@ -61,7 +57,7 @@ function Profile() {
                             <AiOutlineCalendar size={50} className="text-purple-500" />
                             <div className="text-right">
                                 <p className="text-2xl font-bold text-gray-800">128</p>
-                                <p className="text-sm text-gray-600">Completed Tasks</p>
+                                <p className="text-sm text-gray-600">Tareas Completadas</p>
                             </div>
                         </div>
                     </div>
@@ -70,7 +66,7 @@ function Profile() {
                             <AiOutlineStar size={50} className=" text-yellow-500" />
                             <div className="text-right">
                                 <p className="text-2xl font-bold text-gray-800">95%</p>
-                                <p className="text-sm text-gray-600">On-Time Rate</p>
+                                <p className="text-sm text-gray-600">Importantes</p>
                             </div>
                         </div>
                     </div>
