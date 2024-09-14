@@ -1,55 +1,19 @@
-"use client";
 
-import { useAuthContext } from "@/providers/FirebaseContext/AuthContext";
-import { Auth } from "@/providers/types/ContextType";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 function RegisterAuth() {
     const [repeatPassword, setRepeatPassword] = useState<string>('');
     const [isRegistered, setIsRegistered] = useState(false);
-    const [userData, setUserData] = useState<Auth>({
-        email: '',
-        password: '',
-    });
+   
     const router = useRouter();
 
-    const { signUp } = useAuthContext();
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setUserData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
 
     const handleRepeatPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setRepeatPassword(e.target.value);
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (!userData.email || !userData.password || !repeatPassword) {
-            alert('Por favor, complete todos los campos del formulario.');
-            return;
-        }
-
-        if (userData.password !== repeatPassword) {
-            alert('Las contraseñas no coinciden');
-            return;
-        }
-
-        try {
-            await signUp(userData);
-            setIsRegistered(true);
-        } catch (error) {
-            console.error('Error al registrar al usuario:', error);
-            alert('Hubo un error al registrar al usuario. Por favor, inténtalo de nuevo más tarde.');
-
-        }
-    };
+   
 
     useEffect(() => {
         if (isRegistered) {
@@ -62,7 +26,7 @@ function RegisterAuth() {
             <div className="mb-2"></div>
             <h2 className="text-2xl font-bold leading-tight">Sign up to create account</h2>
             <p className="mt-2 text-base text-gray-600">Already have an account? Sign In</p>
-            <form className="mt-5" onSubmit={handleSubmit}>
+            <form className="mt-5" >
                 <div className="space-y-4">
 
                     <div className="text-black">
@@ -73,8 +37,8 @@ function RegisterAuth() {
                                 type="email"
                                 className="text-gray-900 flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 "
                                 name="email"
-                                value={userData.email}
-                                onChange={handleInputChange}
+                                // value={userData.email}
+                                // onChange={handleInputChange}
                             />
                         </div>
                     </div>
@@ -86,8 +50,8 @@ function RegisterAuth() {
                                 type="password"
                                 className="text-black flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 name="password"
-                                value={userData.password}
-                                onChange={handleInputChange}
+                                // value={userData.password}
+                                // onChange={handleInputChange}
                             />
                         </div>
                     </div>

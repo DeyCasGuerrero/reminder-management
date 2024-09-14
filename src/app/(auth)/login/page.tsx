@@ -1,13 +1,12 @@
 "use client";
 
-import { useAuthContext } from "@/providers/FirebaseContext/AuthContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function LoginAuth() {
 
-    const {login} =useAuthContext();
+
     const router = useRouter();
 
     const [user, setUser]=useState({
@@ -24,15 +23,7 @@ function LoginAuth() {
         }))
     }
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault(); // evitar que se recargue y manejar personalización en ts
-        try {
-            await login(user);
-        } catch (error) {
-            alert("error mi papuh")
-        }
-
-    }
+   
 
     return (
         <div className="w-80 rounded-lg shadow  p-6 bg-white  ">
@@ -40,7 +31,7 @@ function LoginAuth() {
                 <h2 className="text-2xl font-medium text-slate-700">Login</h2>
                 <p className="text-slate-500">Enter details below.</p>
             </div>
-            <form className="w-full mt-4 space-y-3" onSubmit={handleSubmit}>
+            <form className="w-full mt-4 space-y-3" >
                 <div>
                     <input
                         className="outline-none border-2 rounded-md px-2 py-1 text-slate-500 w-full focus:border-blue-300"

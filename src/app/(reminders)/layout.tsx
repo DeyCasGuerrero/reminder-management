@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import { ProviderChakra } from "@/providers/Chakra/ChakraProvider";
-import AuthProvider from "@/providers/FirebaseContext/AuthContext";
+
 
 export const metadata: Metadata = {
   title: 'Next.js',
@@ -18,11 +18,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="flex flex-col flex-grow w-full h-screen overflow-y-auto  bg-gradient-to-br from-purple-400 to-indigo-600">
-          <AuthProvider>
-            <ProviderChakra>
-              {children}
-            </ProviderChakra>
-          </AuthProvider>
+          <ProviderChakra>
+            {children}
+          </ProviderChakra>
         </div>
       </body>
     </html>
