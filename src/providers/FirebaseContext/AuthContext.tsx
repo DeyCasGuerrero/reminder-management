@@ -10,9 +10,7 @@ import { auth as authFirebase } from "../../services/firebase";
 import { FirebaseError } from "firebase/app";
 
 
-export const contextAuth = createContext<SignUpAndLoginFunction | undefined>(
-    undefined
-);
+export const contextAuth = createContext<SignUpAndLoginFunction | undefined>(undefined);
 
 export const useAuthContext = () => {
     const context = useContext(contextAuth);
@@ -30,7 +28,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         try {
             await createUserWithEmailAndPassword(authFirebase, email, password);
 
-        } catch (error ) {
+        } catch (error) {
 
             if (error instanceof FirebaseError) {
              
@@ -50,6 +48,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         try {
             const credencial= await signInWithEmailAndPassword(authFirebase, email, password);
             console.log(credencial.user);
+            const token = await credencial.user.getIdToken();
+            // document.cookie = `token=${token}; path=/;`;
         } catch (error) {
             if (error instanceof FirebaseError) {
            
