@@ -11,14 +11,14 @@ function Profile() {
     const [theme, setTheme] = useState('light')
     return (
 
-        <div className="w-11/12 h-full flex overflow-y-auto flex-col items-center gap-10 mx-auto bg-white/90 backdrop-blur-sm shadow-xl py-5 px-4 rounded-2xl">
+        <div className="w-11/12 h-full flex overflow-y-auto flex-col items-center gap-2 mx-auto bg-white/90 backdrop-blur-sm shadow-xl py-5 px-4 rounded-2xl">
             <div>
                 <div className="text-2xl md:text-3xl font-bold text-center text-gray-800">
                     ✨ Your Awesome Profile ✨
                 </div>
             </div>
-            <div>
-                <div className="flex  items-center space-y-2  flex-col gap-4">
+            <div className="flex flex-col w-full">
+                <div className="flex  items-center flex-col gap-2">
                     <div className="flex flex-col gap-2 items-center">
 
                         <Avatar src="/placeholder.svg?height=128&width=128" name={name} size={'xl'} />

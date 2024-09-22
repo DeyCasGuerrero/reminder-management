@@ -19,12 +19,12 @@ function SideBar() {
 
                             return (
                                 <Link key={index} href={route.path}>
-                                    <button className="w-full flex items-center group justify-start gap-2  text-white rounded-lg px-1 py-2 hover:bg-white hover:bg-opacity-20">
+                                    <div className="w-full flex items-center group justify-start gap-2  text-white rounded-lg px-1 py-2 hover:bg-white hover:bg-opacity-20">
                                         {IconReact && <IconReact size={20} className="group-hover:text-black" />}
                                         <span className="group-hover:text-black">
                                             {route.name}
                                         </span>
-                                    </button>
+                                    </div>
                                 </Link>
                             )
                         })}
@@ -36,12 +36,12 @@ function SideBar() {
 
                             return (
                                 <Link key={index} href={route.path}>
-                                    <button className="w-full flex group items-center rounded-lg gap-2 justify-start px-1 py-2 text-white hover:bg-white hover:bg-opacity-20">
+                                    <div className="w-full flex group items-center rounded-lg gap-2 justify-start px-1 py-2 text-white hover:bg-white hover:bg-opacity-20">
                                         {IconReact && <IconReact size={20} className="group-hover:text-black" />}
                                         <span className="group-hover:text-black">
                                             {route.name}
                                         </span>
-                                    </button>
+                                    </div>
                                 </Link>
                             )
                         })}
@@ -58,12 +58,12 @@ function SideBar() {
                             return (
 
                                 <Link key={index} href={route.path}>
-                                    <button className="w-full flex group items-center gap-2 rounded-lg px-1 py-2 justify-start text-white hover:bg-white hover:bg-opacity-20">
+                                    <div className="w-full flex group items-center gap-2 rounded-lg px-1 py-2 justify-start text-white hover:bg-white hover:bg-opacity-20">
                                         {IconReact && <IconReact size={20} className="group-hover:text-black" />}
                                         <span className="group-hover:text-black">
                                             {route.name}
                                         </span>
-                                    </button>
+                                    </div>
                                 </Link>
                             )
                         })}

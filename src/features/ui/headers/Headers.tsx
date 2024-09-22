@@ -1,5 +1,6 @@
-import Image from "next/image";
+"use client";
 import { Avatar, Box, Button, Menu, MenuButton, MenuDivider, MenuGroup, MenuItem, MenuList, VStack } from "@chakra-ui/react";
+import { signOut } from "next-auth/react";
 
 export default function Header() {
     return (
@@ -19,7 +20,7 @@ export default function Header() {
                     <MenuList color='black' p={2}>
                         <MenuGroup title='Profile' display='flex' flexDirection='column' gap={6}>
                             <MenuItem >My Account</MenuItem>
-                            <Button colorScheme="red" ml={2}>LogOut</Button>
+                            <Button colorScheme="red" ml={2} onClick={()=>signOut()}>LogOut</Button>
                         </MenuGroup>
                         <MenuDivider />
                         <MenuGroup title='Help'>
