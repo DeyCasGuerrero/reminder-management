@@ -11,7 +11,6 @@ const handler = NextAuth({
             },
 
             async authorize(credentials) {
-                console.log("wadasdasdas", credentials)
                 try {
                     const res = await fetch(`${process.env.API_URL}/auth/login`,{
                         method: "POST",
@@ -24,7 +23,10 @@ const handler = NextAuth({
                         })
                     })
 
+
                     const user = await res.json();
+
+                    console.log("wasadsad",user);
                     if (res.ok && user) {
                         return user
                     }

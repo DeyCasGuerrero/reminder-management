@@ -1,4 +1,3 @@
-
 "use client";
 import dynamic from "next/dynamic";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -6,14 +5,14 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { Input } from "@chakra-ui/react";
 import { AiFillSave } from "react-icons/ai";
 import { IoArrowBackOutline } from "react-icons/io5";
-
+import { useSession } from "next-auth/react";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 import Link from "next/link";
 
-
-
 function RichTextReminders() {
+
+
 
     const [value, setValue] = useState({
         title: '',
@@ -36,6 +35,8 @@ function RichTextReminders() {
         }));
     };
 
+    console.log(value);
+
 
     const toolbarOptions = [
         [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
@@ -47,6 +48,10 @@ function RichTextReminders() {
     ];
 
 
+    const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        
+    }
 
     return (
         <>
@@ -56,7 +61,7 @@ function RichTextReminders() {
                         <IoArrowBackOutline size={30} color="green" />
                     </div>
                 </Link>
-                <div className="max-w-4xl mx-auto h-full bg-white rounded-lg shadow-xl overflow-hidden">
+                <form onSubmit={handleSubmit} className="max-w-4xl mx-auto h-full bg-white rounded-lg shadow-xl overflow-hidden">
                     <header className="bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 p-6 text-white">
                         <h1 className="text-3xl font-bold flex items-center gap-4">
                             <AiOutlineEdit />
@@ -76,7 +81,7 @@ function RichTextReminders() {
                                 className="w-full"
                             />
                             <ReactQuill
-                                className="h-96"
+                                className="h-96 text-gray-500"
                                 theme="snow"
                                 modules={{ toolbar: toolbarOptions }}
                                 value={value.content}
@@ -85,12 +90,12 @@ function RichTextReminders() {
                             />
                         </div>
 
-                        <button className="w-full flex items-center justify-center mt-20 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out">
+                        <button type="submit" className="w-full flex items-center justify-center mt-20 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out">
                             <AiFillSave className="mr-2 h-4 w-4" /> Save Reminder
                         </button>
                     </div>
 
-                </div>
+                </form>
             </div>
         </>
     )

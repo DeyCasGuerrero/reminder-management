@@ -4,10 +4,13 @@ import { getToken } from 'next-auth/jwt';
 
 export async function middleware(req:NextRequest) {
     // Obtener el token de la cookie
-    const token = await getToken({ req, secret: process.env.JWT_SECRET });
+    const payload = await getToken({ req, secret: process.env.JWT_SECRET });
+    
+    const token = payload ? payload.token : null;
+    
     const {pathname} = req.nextUrl; //me da directamente el path
 
-    // console.log("el token wasadasdas", token);
+    console.log("el token wasadasdas", token);
     // console.log("el pahtasadsa", pathname);
 
     if(token && (pathname === '/login' || pathname === '/register')){

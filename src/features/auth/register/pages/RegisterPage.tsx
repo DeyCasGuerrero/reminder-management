@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { countries } from "../utils/countrys";
 import Link from "next/link";
 import { AuthInterface } from "@/business/interfaces/AuthInterface";
-import { fetchResgister } from "@/business/registerFetch";
+import { fetchResgister } from "@/business/user/registerFetch";
 
 export default function RegitserPage() {
 
@@ -54,8 +54,6 @@ export default function RegitserPage() {
             alert('contraseñas no coinciden')
             return;
         }
-
-
 
         const result = await fetchResgister(userNew);
         if(result.isRegister){

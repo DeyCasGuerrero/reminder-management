@@ -1,4 +1,4 @@
-import { AuthInterface } from "./interfaces/AuthInterface";
+import { AuthInterface } from "../interfaces/AuthInterface";
 
 export async function fetchResgister(auth:AuthInterface):Promise<{isRegister:boolean}>{
 
