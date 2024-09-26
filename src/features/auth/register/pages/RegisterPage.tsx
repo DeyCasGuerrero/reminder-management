@@ -13,20 +13,18 @@ export default function RegitserPage() {
         username: '',
         email: '',
         password: '',
-        country: '',
-        gender: '',
 
     })
 
     const [repeatPassword, setRepeatPassword] = useState('');
-    const [countrySelected, setCountrySelected] = useState('');
+    // const [countrySelected, setCountrySelected] = useState('');
     const router = useRouter();
 
-    const handleCountrySearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCountrySelected(e.target.value);
-    };
+    // const handleCountrySearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setCountrySelected(e.target.value);
+    // };
 
-    const filteredCountries = countries.filter(c => c.toLowerCase().includes(countrySelected.toLowerCase()));
+    // const filteredCountries = countries.filter(c => c.toLowerCase().includes(countrySelected.toLowerCase()));
 
     const onChangeData = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -39,27 +37,21 @@ export default function RegitserPage() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const userNew = {
-            ...user,
-            country: countrySelected,
-            username: "juanxd"
-        }
+  
+        // if (!countries.includes(userNew.country)) {
+        //     alert('El país seleccionado no está disponible o le faltan letras');
+        //     return;
+        // }
 
-        if (!countries.includes(userNew.country)) {
-            alert('El país seleccionado no está disponible o le faltan letras');
-            return;
-        }
-
-        if (!(userNew.password === repeatPassword)) {
+        if (!(user.password === repeatPassword)) {
             alert('contraseñas no coinciden')
             return;
         }
 
-        const result = await fetchResgister(userNew);
-        if(result.isRegister){
+        const result = await fetchResgister(user);
+        if (result.isRegister) {
             router.push('/login');
         }
-        console.log(userNew);
     }
 
     return (
@@ -77,6 +69,21 @@ export default function RegitserPage() {
                                 className="text-gray-900 flex h-10 w-full rounded-md border border-gray-300 outline-none bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 "
                                 name="email"
                                 value={user.email}
+                                onChange={onChangeData}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="text-black">
+                        <label className="text-base font-medium text-gray-900">Username</label>
+                        <div className="mt-2">
+                            <input
+                                required
+                                placeholder="DeyLet32"
+                                type="text"
+                                className="text-gray-900 flex h-10 w-full rounded-md border border-gray-300 outline-none bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 "
+                                name="username"
+                                value={user.username}
                                 onChange={onChangeData}
                             />
                         </div>
@@ -109,7 +116,7 @@ export default function RegitserPage() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col justify-between gap-4 w-full ">
+                    {/* <div className="flex flex-col justify-between gap-4 w-full ">
                         <div className="flex flex-col w-full gap-1">
                             <label className="text-base font-medium text-gray-900" htmlFor="">
                                 País
@@ -129,7 +136,7 @@ export default function RegitserPage() {
                                         setCountrySelected(selectedCountry);
                                     }}
                                     name="country"
-                                    
+
                                     id="country" className="border outline-none bg-transparent rounded w-60 px-1 py-2">
                                     {filteredCountries.length > 0 ? (
                                         filteredCountries.map((country, index) => (
@@ -158,12 +165,12 @@ export default function RegitserPage() {
                             </select>
                         </div>
 
-                    </div>
+                    </div> */}
+
 
                     <Link href={"/login"} className="text-black underline text-sm w-full text-right">
                         Go to Login
                     </Link>
-
                 </div>
                 <div>
                     <button

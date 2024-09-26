@@ -9,10 +9,11 @@ import { useSession } from "next-auth/react";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 import Link from "next/link";
+import { postReminder } from "@/business/reminders/postReminders";
 
 function RichTextReminders() {
 
-
+    const {data:session}=useSession();
 
     const [value, setValue] = useState({
         title: '',
@@ -35,9 +36,6 @@ function RichTextReminders() {
         }));
     };
 
-    console.log(value);
-
-
     const toolbarOptions = [
         [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
@@ -48,8 +46,21 @@ function RichTextReminders() {
     ];
 
 
-    const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if(!value.content || !value.title){
+            alert('Title or content missing');
+            return;
+        }
+
+        try {
+            if(session?.accessToken){
+                await postReminder(value , session?.accessToken);
+            }
+        } catch (error) {
+            return "There was an error"
+        }
         
     }
 

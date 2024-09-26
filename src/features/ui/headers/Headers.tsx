@@ -1,8 +1,9 @@
 "use client";
-import { Avatar, Box, Button, Menu, MenuButton, MenuDivider, MenuGroup, MenuItem, MenuList, VStack } from "@chakra-ui/react";
-import { signOut } from "next-auth/react";
+import { Avatar, Box, Button, Heading, HStack, Menu, MenuButton, MenuDivider, MenuGroup, MenuItem, MenuList, VStack } from "@chakra-ui/react";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Header() {
+    const { data: session, status } = useSession();
     return (
         <header className="flex items-center px-4 gap-4  justify-between w-full overflow-hidden py-1 h-20 ">
             <div>
@@ -13,14 +14,20 @@ export default function Header() {
             <VStack className=" h-full flex  items-center justify-center gap-2">
                 <Menu>
                     <MenuButton as={Box} cursor='pointer'>
-                        <Button  height="auto" p={0} borderRadius="full" >
-                            <Avatar name="Dey" src={'/profile.jpg'} />
-                        </Button>
+                        <HStack>
+                            <Heading size={'sm'}>
+                                {session?.user.email}
+                            </Heading>
+                            <Button height="auto" p={0} borderRadius="full" >
+                                <Avatar name={`${session?.user.email}`} />
+                            </Button>
+                        </HStack>
+
                     </MenuButton>
                     <MenuList color='black' p={2}>
                         <MenuGroup title='Profile' display='flex' flexDirection='column' gap={6}>
                             <MenuItem >My Account</MenuItem>
-                            <Button colorScheme="red" ml={2} onClick={()=>signOut()}>LogOut</Button>
+                            <Button colorScheme="red" ml={2} onClick={() => signOut()}>LogOut</Button>
                         </MenuGroup>
                         <MenuDivider />
                         <MenuGroup title='Help'>
