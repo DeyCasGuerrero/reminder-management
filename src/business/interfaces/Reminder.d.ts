@@ -6,5 +6,6 @@ export interface ReminderInterface{
     priority?: string; // baja, media, alta
     completed?: boolean = false;
     createdAt?:string;
+    favorite:boolean;
     updatedAt?: string;
 }

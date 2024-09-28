@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="flex flex-col flex-grow w-full h-screen overflow-y-auto  bg-gradient-to-br from-purple-400 to-indigo-600">
+        <div className="flex flex-col flex-grow w-full h-screen overflow-y-hidden  bg-gradient-to-br from-purple-400 to-indigo-600">
           <NextAuthProviders>
             <ProviderChakra>
               {children}

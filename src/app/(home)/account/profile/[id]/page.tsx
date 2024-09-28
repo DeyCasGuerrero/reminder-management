@@ -1,14 +1,31 @@
 "use client";
 
+import { UserInterface } from "@/business/interfaces/userInterface";
+import { getUserById } from "@/business/user/userById";
 import { Avatar } from "@chakra-ui/react";
-import { useState } from "react";
-import { AiOutlineBell, AiOutlineCalendar, AiOutlineStar, AiOutlineEdit  } from "react-icons/ai";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { AiOutlineBell, AiOutlineCalendar, AiOutlineStar, AiOutlineEdit } from "react-icons/ai";
 
 function Profile() {
 
-    const [name, setName] = useState('Alex Johnson')
+    const { data: session, status } = useSession();
     const [isEditing, setIsEditing] = useState(false)
     const [theme, setTheme] = useState('light')
+    const [userState, setUserState] = useState<UserInterface>();
+
+    useEffect(() => {
+        const sendIdUser = async () => {
+            if (!session || !session.user.id) return;
+            if (status === 'authenticated') {
+                const user = await getUserById(session.user.id, session.accessToken);
+                setUserState(user);
+            }
+        }
+
+        sendIdUser();
+    }, [session, session?.user, session?.user.id])
+
     return (
 
         <div className="w-11/12 h-full flex overflow-y-auto flex-col items-center gap-2 mx-auto bg-white/90 backdrop-blur-sm shadow-xl py-5 px-4 rounded-2xl">
@@ -21,22 +38,21 @@ function Profile() {
                 <div className="flex  items-center flex-col gap-2">
                     <div className="flex flex-col gap-2 items-center">
 
-                        <Avatar src="/placeholder.svg?height=128&width=128" name={name} size={'xl'} />
-                        <h1 className="truncate text-xl font-semibold text-gray-800 text-center">Deyvis Castillo</h1>
+                        <Avatar src="/placeholder.svg?height=128&width=128" name={userState?.username} size={'xl'} />
+                        <h1 className="truncate text-xl font-semibold text-gray-800 text-center">{userState?.username}</h1>
                         <div className="flex items-center gap-2 text-text-45 ">
-                            <span className="min-w-28 truncate">
-                                Ingeniero de sistemas y traficante de organos
+                            <span className="min-w-28 truncate text-center ">
+                                {userState?.profile?.bio ? userState.profile.bio: "No boi yet"}
                             </span>
                         </div>
 
-                        <p className="text-text-25 font-semibold">Locate: Piura, Perú </p>
+                        <p className="text-text-25 text-center font-semibold">{userState?.profile?.country ? userState.profile.country :"No country yet"}</p>
 
-                        
+
                     </div>
 
                     <button className="bg-gradient-to-r flex items-center gap-1 from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white font-bold py-2 px-4 rounded-full transition-all duration-300 transform hover:scale-105">
-                        <AiOutlineEdit size={30}/>
-                        
+                        <AiOutlineEdit size={30} />
                         editar perfil
                     </button>
                 </div>

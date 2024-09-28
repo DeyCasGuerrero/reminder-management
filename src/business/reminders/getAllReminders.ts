@@ -2,7 +2,7 @@ import { getToken } from 'next-auth/jwt';
 import { ReminderInterface } from '../interfaces/Reminder';
 import { NextRequest } from 'next/server';
 
-export async function getSomeReminders(token:string, id:string): Promise<ReminderInterface[]> {
+export async function getAllReminders(token:string, id:string): Promise<ReminderInterface[]> {
 
     if (!token || !id) {
         console.log("Token o ID no disponibles");
