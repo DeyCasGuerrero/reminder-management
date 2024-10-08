@@ -10,6 +10,9 @@ import { useReminders } from "@/store/favorite.store";
 import SelectComponent from "../select-component/select-component";
 import { useReminderStore } from "@/store/reminder.store";
 import { patchReminders } from "@/business/reminders/patchReminders";
+import { deleteReminder } from "@/business/reminders/deleteReminder";
+import { toast } from "sonner";
+import { useModals } from "@/store/modals.store";
 
 
 const getCategoryColor = (category: string) => {
@@ -20,7 +23,7 @@ const getCategoryColor = (category: string) => {
         "University": "bg-yellow-500",
         "default": "bg-gray-500"
     };
-    return colors[category] || colors.default; 
+    return colors[category] || colors.default;
 };
 
 
@@ -33,14 +36,14 @@ const getGradient = (category: string) => {
         "default": "from-gray-400 to-gray-500"
     };
 
-    return gradients[category] || gradients.default; 
+    return gradients[category] || gradients.default;
 };
 
 export default function CardsReminders({ reminder }: { reminder: ReminderInterface }) {
     const { data: session, status } = useSession();
     const { selectPriority, tags, addTags, removeTags, setPriority } = useReminderStore(); // Obtener estado y funciones del store
     const [isAccept, setIsAccept] = useState<boolean>(false);
-    
+    const {  setIsOpen,isDeleteModalOpen } = useModals();
     const [reminderData, setReminderData] = useState<Partial<ReminderInterface>>({
         title: '',
         content: '',
@@ -58,7 +61,7 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
     } = useReminders();
 
     const firstTag = reminder.tags && reminder.tags.length > 0 ? reminder.tags[0] : "default";
-    
+
     function formatDate(dateString: string): string {
         const date = new Date(dateString);
         return date.toLocaleString(); // Devuelve la fecha en formato legible según la configuración regional
@@ -73,8 +76,48 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
         }));
     }
 
-    console.log("favorites", favorites)
+    const toastest = (promise:boolean) => {
+        if(promise){
+            toast.success("El recordatorio ha sido editado",{
+                position: "top-right",
+                style:{
+                    background:"#00ff00",
+                    color:"#000000"
+                    
+                }
+            });
+        }     
+        else{
+            toast.error("Error al editar el recordatorio",{
+                position: "top-right",
+                style:{
+                    background:"#ff0000",
+                    color:"#000000"
+                    
+                }
+            });
+        }
+    }
 
+    // console.log("favorites", favorites)
+
+    const clickDelete = async () => {
+
+        setIsOpen(true);
+
+        if (!session?.accessToken) return;
+
+        console.log(isDeleteModalOpen);
+
+        if(isDeleteModalOpen){
+
+            const deletePromise = deleteReminder(reminder._id, session?.accessToken); // Aquí pasas la promesa
+    
+            console.log(deletePromise);
+        }
+
+
+    }
 
     const handleSave = async () => {
         const newReminderData: Partial<ReminderInterface> = {
@@ -90,10 +133,12 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
         console.log(newReminderData);
         if (!reminder._id || !session?.accessToken) return;
 
-        await patchReminders(reminder._id, session?.accessToken, newReminderData);
+        const promise = await patchReminders(reminder._id, session?.accessToken, newReminderData);
+        toastest(promise);
 
         setPriority('');
         tags.map((tags) => removeTags(tags));
+        
     }
 
 
@@ -115,7 +160,7 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
                         </div>
                     )}
 
-                    { reminder.favorite===true || favorites[reminder._id ?? ''] === true ? (
+                    {reminder.favorite === true || favorites[reminder._id ?? ''] === true ? (
 
                         <button
                             className="text-yellow-300 hover:text-yellow-500"
@@ -209,13 +254,13 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
                                     ))} */}
                                 </>
                             ) : (
-                                <>
+                                <div className="flex flex-wrap gap-2">
                                     {reminder.tags?.map((tag, index) => (
                                         <Tag key={index} className="text-white">
                                             {tag}
                                         </Tag>
                                     ))}
-                                </>
+                                </div>
                             )}
 
 
@@ -255,7 +300,7 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
                         )}
 
                         <button
-
+                            onClick={clickDelete}
                             className="text-white hover:text-red-500"
                         >
                             <MdDeleteOutline className="h-5 w-5" />

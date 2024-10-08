@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
+import { Toaster } from 'sonner';
 import { ProviderChakra } from "@/providers/Chakra/ChakraProvider";
 import { SessionProvider } from "next-auth/react";
 import NextAuthProviders from "@/providers/SessionProvider/NextAuthProvider";
+import { Headers, Sidebar } from "@/features/ui";
+import UnderBard from "@/features/ui/underBar/underBar";
 
 export const metadata: Metadata = {
   title: 'Next.js',
@@ -21,7 +24,19 @@ export default function RootLayout({
         <div className="flex flex-col flex-grow w-full h-screen overflow-y-hidden  bg-gradient-to-br from-purple-400 to-indigo-600">
           <NextAuthProviders>
             <ProviderChakra>
-              {children}
+            <div className="flex flex-col flex-grow w-full h-screen overflow-y-auto  bg-gradient-to-br from-purple-400 to-indigo-600">
+              <div className="flex flex-grow h-full items-center overflow-y-auto ">
+                <Sidebar />
+                <main className="flex w-full h-full  flex-col items-center justify-start overflow-y-auto ">
+                  <div className="flex items-center w-full  h-full justify-center overflow-y-auto ">
+                  {children}
+                  <Toaster />
+                  </div>
+                </main>
+              </div>
+              <UnderBard />
+            </div>
+              
             </ProviderChakra>
           </NextAuthProviders>
         </div>

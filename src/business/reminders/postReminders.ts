@@ -1,8 +1,8 @@
 import { ReminderInterface } from "../interfaces/Reminder";
 
-export async function postReminder(reminder:ReminderInterface, token:string){
+export async function postReminder(reminder:Partial<ReminderInterface>, token:string):Promise<boolean>{
     
-    const res = await fetch('http://localhost:3001/reminders', {
+    const res = await fetch( `${process.env.NEXT_PUBLIC_APIKEY}/reminders`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -13,5 +13,7 @@ export async function postReminder(reminder:ReminderInterface, token:string){
 
     if(!res.ok){
         console.log('NO SE PUDO WASAAAA')
+        return false;
     }
+    return true;
 }

@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import { ChangeEvent, useEffect, useState } from "react";
+import React,{ ChangeEvent, useEffect, useState } from "react";
 import { AiOutlineEdit } from "react-icons/ai";
 import { Input } from "@chakra-ui/react";
 import { AiFillSave } from "react-icons/ai";
@@ -10,6 +10,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 import Link from "next/link";
 import { postReminder } from "@/business/reminders/postReminders";
+import { toast } from "sonner";
 
 function RichTextReminders() {
 
@@ -46,17 +47,51 @@ function RichTextReminders() {
     ];
 
 
+    const evaluateData = ():boolean => {
+        if(!value.content || !value.title){
+            toast.error("Por favor rellenar los campos",{
+                style:{
+                    background:"#ff0000",
+                    color:"#fff"
+                },
+                position:"top-right"
+            })
+            return true;
+        }
+        return false;
+    }
+
+    const evaluateOk = (promesa:boolean) => {
+        if(promesa){
+            toast.success("El reminders fue creado",{
+                style:{
+                    background:"#00ff00",
+                    color:"#fff"
+                },
+                position:"bottom-right",
+                duration:5000
+            })
+        }else{
+            toast.error("Hubo un error al crear el reminder",{
+                style:{
+                    background:"#ff0000",
+                    color:"#fff"
+                },
+                position:"top-right"
+            })
+        }
+    }
+
+
     const handleSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if(!value.content || !value.title){
-            alert('Title or content missing');
-            return;
-        }
-
+        if(evaluateData())return;
+         
         try {
             if(session?.accessToken){
-                await postReminder(value , session?.accessToken);
+               const promesa = await postReminder(value , session?.accessToken);
+               evaluateOk(promesa);
             }
         } catch (error) {
             return "There was an error"

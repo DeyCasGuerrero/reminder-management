@@ -1,8 +1,6 @@
 import { ReminderInterface } from "../interfaces/Reminder";
 
-export async function patchReminders(idReminders: string, token:String ,reminders:Partial<ReminderInterface>){
-
-
+export async function patchReminders(idReminders: string, token:String ,reminders:Partial<ReminderInterface>):Promise<boolean>{
     console.log("patchReminders", {idReminders, token, reminders});
     const response = await fetch(`${process.env.NEXT_PUBLIC_APIKEY}/reminders/${idReminders}`,{
         method: 'PATCH',
@@ -15,9 +13,10 @@ export async function patchReminders(idReminders: string, token:String ,reminder
 
     if(!response.ok){
         console.log("error update")
+        return false;
     }
 
-    const data = response.json();
+    // const data = response.json();
 
-    return data;
+    return true;
 }

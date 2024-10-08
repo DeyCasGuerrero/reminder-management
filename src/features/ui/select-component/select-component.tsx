@@ -50,7 +50,7 @@ export default function SelectComponent({ options, name, onChange, isvalue, ismu
                     <h3>Etiquetas Seleccionadas:</h3>
                     <ul className="space-y-2">
                         {tags.map((tag, index) => (
-                            <div key={index} className="flex items-center gap-2">
+                            <div key={index} className="flex items-center gap-2 ">
                                 <Tag p={2} m={1} bgColor={'yellowgreen'} className="text-white">
                                     {tag}
                                 </Tag>
