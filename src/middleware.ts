@@ -10,6 +10,7 @@ export async function middleware(req: NextRequest) {
 
   const { pathname } = req.nextUrl; // obtener el path actual
 
+
 //   console.log("AccessToken desde el middleware:", accessToken);
 
   // Si el usuario tiene el accessToken y está intentando acceder a /login o /register, redirigirlo al home
@@ -18,7 +19,9 @@ export async function middleware(req: NextRequest) {
   }
 
   // Si no hay accessToken y el usuario intenta acceder a rutas protegidas
-  if (!accessToken && (pathname === '/' || pathname === '/account' || pathname === '/reminders' || pathname === '/add-reminders')) {
+  if (!accessToken && (pathname === '/' || pathname === '/account' || 
+    pathname === '/reminders' || pathname === '/add-reminders' || 
+    pathname === '/report' || pathname === '/account/profile' || pathname === '/account/settings')) {
     return NextResponse.redirect(new URL('/login', req.url));
   }
 
@@ -34,5 +37,8 @@ export const config = {
     '/',
     '/reminders',
     '/add-reminders',
+    '/report',
+    '/account/profile',
+    '/account/settings',
   ],
 };

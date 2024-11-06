@@ -7,7 +7,7 @@ const config: ThemeConfig = {
 };
 
 
-const theme = extendTheme(config,
+export const theme = extendTheme(config,
     {
         colors: {
             brand: {

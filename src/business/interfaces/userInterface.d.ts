@@ -1,10 +1,9 @@
 interface ProfileInterface{
-    firstName: string;
-    bio: string;
+    firstName?: string;
+    bio?: string;
     avatarUrl?: string;
-    country: string
-    gender: string;
-
+    country?: string
+    gender?: string;
 }
 
 

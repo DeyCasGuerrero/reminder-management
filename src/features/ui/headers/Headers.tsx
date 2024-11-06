@@ -1,6 +1,7 @@
 "use client";
 import { Avatar, Box, Button, Heading, HStack, Menu, MenuButton, MenuDivider, MenuGroup, MenuItem, MenuList, VStack } from "@chakra-ui/react";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function Header() {
     const { data: session, status } = useSession();
@@ -26,7 +27,9 @@ export default function Header() {
                     </MenuButton>
                     <MenuList color='black' p={2}>
                         <MenuGroup title='Profile' display='flex' flexDirection='column' gap={6}>
-                            <MenuItem >My Account</MenuItem>
+                            <Link href={'/account/profile'}>
+                                <MenuItem >My Account</MenuItem>
+                            </Link>
                             <Button colorScheme="red" ml={2} onClick={() => signOut()}>LogOut</Button>
                         </MenuGroup>
                         <MenuDivider />

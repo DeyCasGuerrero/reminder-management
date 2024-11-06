@@ -2,16 +2,23 @@
 import { ReminderInterface } from "@/business/interfaces/Reminder";
 import { ModalSendResponse } from "@/features/ui";
 import CardsReminders from "@/features/ui/cards-reminders/cards-reminders";
+import { SuggestionAi } from "@/features/ui/suggestion-ai/SuggestionAi";
+import { useAccountantStore } from "@/store/accountant.store";
 import { useModals } from "@/store/modals.store";
 import Link from "next/link";
+import { useEffect } from "react";
 import { AiFillFileAdd } from "react-icons/ai";
 
 interface ListingAllRemindersProps {
     reminders: ReminderInterface[];
 }
 function ListingAllReminders({ reminders }: ListingAllRemindersProps) {
+    const {reminderCount, setReminders } = useAccountantStore();
+    useEffect(() => {
+        setReminders(reminders);
+    }, [reminders, setReminders]);
 
-    const {isOpen, isDeleteModalOpen}=useModals();
+    const {isOpen, isOpenSuggestion}=useModals();
 
     return (
         <section className=" h-full w-full flex flex-col gap-4 overflow-y-auto pb-6 px-2">
@@ -27,6 +34,7 @@ function ListingAllReminders({ reminders }: ListingAllRemindersProps) {
                 ))}
             </div>
             {isOpen && <ModalSendResponse />}
+            {isOpenSuggestion && <SuggestionAi/>}
         </section>
     )
 

@@ -21,22 +21,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="flex flex-col flex-grow w-full h-screen overflow-y-hidden  bg-gradient-to-br from-purple-400 to-indigo-600">
+        <div className="flex flex-col flex-grow w-full h-screen overflow-y-auto  bg-gradient-to-br from-purple-400 to-indigo-600">
           <NextAuthProviders>
             <ProviderChakra>
-            <div className="flex flex-col flex-grow w-full h-screen overflow-y-auto  bg-gradient-to-br from-purple-400 to-indigo-600">
-              <div className="flex flex-grow h-full items-center overflow-y-auto ">
-                <Sidebar />
-                <main className="flex w-full h-full  flex-col items-center justify-start overflow-y-auto ">
-                  <div className="flex items-center w-full  h-full justify-center overflow-y-auto ">
-                  {children}
-                  <Toaster />
-                  </div>
-                </main>
+              <div className="flex flex-col flex-grow w-full h-screen overflow-y-auto bg-gradient-to-br from-purple-400 to-indigo-600">
+                <div className="flex flex-grow h-full items-center overflow-y-auto ">
+                  <Sidebar />
+                  <main className="flex w-full h-full  flex-col items-center justify-start overflow-y-auto pt-2 ">
+                    <div className="flex items-center w-full  h-full justify-center overflow-y-auto ">
+                      {children}
+                      <Toaster />
+                    </div>
+                  </main>
+                </div>
+                <UnderBard />
               </div>
-              <UnderBard />
-            </div>
-              
+
             </ProviderChakra>
           </NextAuthProviders>
         </div>

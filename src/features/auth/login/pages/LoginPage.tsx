@@ -8,7 +8,7 @@ export default function LoginPage() {
     const { data: session, status } = useSession();
     const router = useRouter();
 
-    console.log("login", {session, status})
+    // console.log("login", {session, status})
 
     const [user, setUser] = useState({
         login: '',

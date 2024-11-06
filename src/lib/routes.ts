@@ -44,7 +44,7 @@ export const routes: RoutesTypes = {
     routes: [
       {
         name: 'Reports',
-        path: '/general/reports',
+        path: '/report',
         icon: AiFillAlert,
       },
     ],

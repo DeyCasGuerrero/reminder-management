@@ -15,8 +15,8 @@ async function Reminders() {
 
 
     return (
-        <main className="h-screen flex justify-center w-full">
-            <div className=" h-full w-full mt-2 flex flex-col overflow-y-auto ">
+        
+            <div className=" h-full w-full  flex flex-col overflow-y-auto ">
                 {(!reminders || reminders.length === 0) ? (
                     <div className="h-full w-full flex items-center justify-center">
                         <EmptyReminder></EmptyReminder>
@@ -25,7 +25,7 @@ async function Reminders() {
                     <ListingAllReminders reminders={reminders} />
                 )}
             </div>
-        </main>
+        
     )
 }
 export default Reminders;

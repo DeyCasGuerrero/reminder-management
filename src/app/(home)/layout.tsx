@@ -6,6 +6,7 @@ import SideBar from "@/features/ui/sideBar/sideBar";
 import { Headers } from "@/features/ui";
 import UnderBard from "@/features/ui/underBar/underBar";
 import NextAuthProviders from "@/providers/SessionProvider/NextAuthProvider";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,10 +28,11 @@ export default function RootLayout({
             <div className="flex flex-col flex-grow w-full h-screen overflow-y-auto  bg-gradient-to-br from-purple-400 to-indigo-600">
               <div className="flex flex-grow h-full items-center overflow-y-auto ">
                 <SideBar />
-                <main className="flex w-full h-full  flex-col items-center justify-start overflow-y-auto ">
+                <main className="flex w-full h-full  flex-col items-center justify-start overflow-hidden ">
                   <Headers />
-                  <div className="flex items-center w-full pb-4 h-full justify-center overflow-y-auto ">
+                  <div className="flex items-center w-full pb-4 h-full justify-center overflow-hidden ">
                     {children}
+                    <Toaster />
                   </div>
                 </main>
               </div>

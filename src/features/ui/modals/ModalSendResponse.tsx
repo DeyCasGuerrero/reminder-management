@@ -1,16 +1,16 @@
 "use client";
 
 import { useModals } from "@/store/modals.store";
-import { useState } from "react";
 
 export default function ModalSendResponse() {
 
-    const {setDeleteModalOpen, setIsOpen}=useModals();
+    const {setDeleteModalOpen,isDeleteModalOpen, setIsOpen}=useModals();
 
     const handleConfirm = () => {
         setIsOpen(false);
         setDeleteModalOpen(true);
     }
+
 
     return (
         <div className="fixed inset-0 bg-purple-500 bg-opacity-50 backdrop-blur-sm flex items-center justify-center">

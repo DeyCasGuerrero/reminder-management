@@ -4,6 +4,7 @@ import ListingAllReminders from "@/features/reminders/listing-all-reminders/List
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { ReminderInterface } from "@/business/interfaces/Reminder";
+import { getFirstFour } from "@/business/reminders/getFirstFour";
 
 export default async function Home() {
 
@@ -13,12 +14,12 @@ export default async function Home() {
   let reminders: ReminderInterface[] = [];
 
 
-  if (session?.accessToken && session.user.id) {
-    // reminders = await getSomeReminders(session.accessToken, session.user.id);
+  if (session?.accessToken) {
+    reminders = await getFirstFour(session.accessToken);
   }
 
   return (
-    <div className="w-full h-full  overflow-hidden">
+    <div className="w-full h-full   overflow-hidden">
       {reminders.length > 0 ? (
         <ListingAllReminders reminders={reminders} />
       ) : (

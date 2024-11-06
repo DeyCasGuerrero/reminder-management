@@ -13,6 +13,7 @@ import { patchReminders } from "@/business/reminders/patchReminders";
 import { deleteReminder } from "@/business/reminders/deleteReminder";
 import { toast } from "sonner";
 import { useModals } from "@/store/modals.store";
+import { AiFillOpenAI } from "react-icons/ai";
 
 
 const getCategoryColor = (category: string) => {
@@ -21,7 +22,7 @@ const getCategoryColor = (category: string) => {
         "Música": "bg-purple-500",
         "Development": "bg-pink-500",
         "University": "bg-yellow-500",
-        "default": "bg-gray-500"
+        "default": "bg-orange-500"
     };
     return colors[category] || colors.default;
 };
@@ -33,7 +34,7 @@ const getGradient = (category: string) => {
         "Música": "from-purple-400 to-pink-500",
         "Development": "from-pink-400 to-red-500",
         "University": "from-yellow-400 to-orange-500",
-        "default": "from-gray-400 to-gray-500"
+        "default": "from-orange-400 to-orange-600"
     };
 
     return gradients[category] || gradients.default;
@@ -43,7 +44,7 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
     const { data: session, status } = useSession();
     const { selectPriority, tags, addTags, removeTags, setPriority } = useReminderStore(); // Obtener estado y funciones del store
     const [isAccept, setIsAccept] = useState<boolean>(false);
-    const {  setIsOpen,isDeleteModalOpen } = useModals();
+    const { setIsOpen, isDeleteModalOpen, isOpenSuggestion, setIsOpenSuggestion, setReminderId } = useModals();
     const [reminderData, setReminderData] = useState<Partial<ReminderInterface>>({
         title: '',
         content: '',
@@ -59,6 +60,7 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
         setIsEdited,
         toogleTags,
     } = useReminders();
+
 
     const firstTag = reminder.tags && reminder.tags.length > 0 ? reminder.tags[0] : "default";
 
@@ -76,24 +78,24 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
         }));
     }
 
-    const toastest = (promise:boolean) => {
-        if(promise){
-            toast.success("El recordatorio ha sido editado",{
+    const toastest = (promise: boolean) => {
+        if (promise) {
+            toast.success("Se ha eliminado correactamente", {
                 position: "top-right",
-                style:{
-                    background:"#00ff00",
-                    color:"#000000"
-                    
+                style: {
+                    background: "#FC9324",
+                    color: "#000000"
+
                 }
             });
-        }     
-        else{
-            toast.error("Error al editar el recordatorio",{
+        }
+        else {
+            toast.error("Error al editar el recordatorio", {
                 position: "top-right",
-                style:{
-                    background:"#ff0000",
-                    color:"#000000"
-                    
+                style: {
+                    background: "#ff0000",
+                    color: "#000000"
+
                 }
             });
         }
@@ -107,16 +109,10 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
 
         if (!session?.accessToken) return;
 
-        console.log(isDeleteModalOpen);
-
-        if(isDeleteModalOpen){
-
-            const deletePromise = deleteReminder(reminder._id, session?.accessToken); // Aquí pasas la promesa
-    
-            console.log(deletePromise);
+        if (isDeleteModalOpen) {
+            const deletePromise = await deleteReminder(reminder._id, session?.accessToken); // Aquí pasas la promesa
+            toastest(deletePromise);
         }
-
-
     }
 
     const handleSave = async () => {
@@ -138,10 +134,13 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
 
         setPriority('');
         tags.map((tags) => removeTags(tags));
-        
+
     }
 
-
+    const handleOpenSuggestion = (id: string) => {
+        setReminderId(id);  // Guardar la id del reminder
+        setIsOpenSuggestion(true);  // Abrir el modal
+    };
 
     return (
         <div key={reminder._id} className={`transform transition duration-300  flex-none w-full  hover:shadow-xl lg:min-w-96`}>
@@ -182,7 +181,10 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
                 </div>
 
                 {!isEdited[reminder._id ? reminder._id : ''] ? (
-                    <div className="mt-2 truncate " dangerouslySetInnerHTML={{ __html: reminder.content }} />
+                    <div className="mt-2 max-h-40 overflow-auto text-base text-white">
+                        {reminder.content}
+                    </div>
+
                 ) : (
                     <div>
                         <label htmlFor="">
@@ -296,6 +298,12 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
                                     <FaCheck color="green" className={`h-5 w-5`} />
                                 </button>
 
+                                <button
+                                    onClick={() => handleOpenSuggestion(reminder._id ? reminder._id : '')}
+                                    className="bg-white p-2 rounded-full flex items-center justify-center">
+                                    <AiFillOpenAI color="green" className={`h-5 w-5`} />
+                                </button>
+
                             </div>
                         )}
 
@@ -309,6 +317,8 @@ export default function CardsReminders({ reminder }: { reminder: ReminderInterfa
 
                 </div>
             </div>
+
         </div>
+
     )
 }
